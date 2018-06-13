@@ -15,3 +15,13 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
+
+/* Heroku Deployment 
+
+Visit app inside browser
+https://powerful-fjord-36688.herokuapp.com/ 
+
+Deployment target, i.e. git repository that we can push our local server to
+https://git.heroku.com/powerful-fjord-36688.git
+
+*/
