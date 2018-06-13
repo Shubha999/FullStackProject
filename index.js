@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-	res.send({ hi: 'there' });
+	res.send({ goobye: 'Shubha' });
 });
 
 // instructs express to tell Node that it wants to listen the upcoming traffic on this port
