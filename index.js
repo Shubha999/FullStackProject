@@ -3,13 +3,13 @@ ES2015 so we don't use import for importing package, but in FE for React we will
 
 const express = require('express');
 
+require('./services/passport');
+
 /* App object is setup to listen the incoming request that is routed from the site from Node */
 // app here is a defintion which represnts a running express app
 const app = express();
 
-app.get('/', (req, res) => {
-	res.send({ goobye: 'Shubha' });
-});
+require('./routes/authRoutes')(app);
 
 // instructs express to tell Node that it wants to listen the upcoming traffic on this port
 
