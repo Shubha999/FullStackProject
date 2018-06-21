@@ -32,6 +32,7 @@ passport.use(
 			clientID: keys.googleClientID,
 			clientSecret: keys.googleClientSecret,
 			callbackURL: '/auth/google/callback', //route handler to express application to handle a user coming back to our app
+			proxy: true,
 		},
 		(accessToken, refreshToken, profile, done) => {
 			//findOne finds the first googleId which has profile.id
