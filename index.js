@@ -2,12 +2,29 @@
 ES2015 so we don't use import for importing package, but in FE for React we will use import */
 
 const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 
+mongoose.connect(keys.mongoURI);
+require('./models/User');
 require('./services/passport');
 
 /* App object is setup to listen the incoming request that is routed from the site from Node */
 // app here is a defintion which represnts a running express app
 const app = express();
+
+app.use(
+	cookieSession({
+		maxAge: 30 * 24 * 60 * 60 * 1000, //for 30days
+		keys: [keys.cookieKey], //key to encypt our cookie
+	}),
+);
+
+//telling passport to use cookies to handle authentication
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 

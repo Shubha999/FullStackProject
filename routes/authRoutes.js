@@ -11,4 +11,13 @@ module.exports = app => {
 	);
 
 	app.get('/auth/google/callback', passport.authenticate('google'));
+
+	app.get('/api/logout', (req, res) => {
+		req.logout(); //takes the cookie and kills the user id we have, so that session is killed
+		res.send(req.user);
+	});
+
+	app.get('/api/current_user', (req, res) => {
+		res.send(req.user);
+	});
 };
