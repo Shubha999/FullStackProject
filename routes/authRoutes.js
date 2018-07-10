@@ -7,14 +7,21 @@ module.exports = app => {
 		'/auth/google',
 		passport.authenticate('google', {
 			scope: ['profile', 'email'],
+			prompt: 'select_account',
 		}),
 	);
 
-	app.get('/auth/google/callback', passport.authenticate('google'));
+	app.get(
+		'/auth/google/callback',
+		passport.authenticate('google'),
+		(req, res) => {
+			res.redirect('/surveys');
+		},
+	);
 
 	app.get('/api/logout', (req, res) => {
 		req.logout(); //takes the cookie and kills the user id we have, so that session is killed
-		res.send(req.user);
+		res.redirect('/');
 	});
 
 	app.get('/api/current_user', (req, res) => {

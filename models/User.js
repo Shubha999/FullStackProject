@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 //Use Schema object to create a new User collection with properties
 const userSchema = new Schema({
 	googleId: String,
+	credits: { type: Number, default: 0 },
 });
 
 //to create an actual model class and to be aware of the collection needed. users is name of collection

@@ -34,6 +34,9 @@ passport.use(
 			callbackURL: '/auth/google/callback', //route handler to express application to handle a user coming back to our app
 			proxy: true,
 		},
+
+		/* Use of Promises */
+		/*
 		(accessToken, refreshToken, profile, done) => {
 			//findOne finds the first googleId which has profile.id
 			//asyn opertaion and to deal with that we have promise
@@ -50,6 +53,25 @@ passport.use(
 					});
 				}
 			});
+		},
+	),
+*/
+
+		//Refactoring code to async/await syntax
+		async (accessToken, refreshToken, profile, done) => {
+			//findOne finds the first googleId which has profile.id
+			//asyn opertaion and to deal with that we have promise
+			const existingUser = await User.findOne({ googleId: profile.id });
+			if (existingUser) {
+				//we already have record with the given profileID
+				//done callback function is called to notify that we have completed doing the operation
+				done(null, existingUser);
+			} else {
+				//we don't have existing User create a new one with this record
+				//Use model class to create new instance of User. .save saves the instance to our database
+				const user = await new User({ googleId: profile.id }).save();
+				done(null, user);
+			}
 		},
 	),
 );

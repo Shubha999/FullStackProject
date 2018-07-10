@@ -3,17 +3,21 @@ ES2015 so we don't use import for importing package, but in FE for React we will
 
 const express = require('express');
 const mongoose = require('mongoose');
-const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
+const keys = require('./config/keys');
 
-mongoose.connect(keys.mongoURI);
 require('./models/User');
 require('./services/passport');
+mongoose.connect(keys.mongoURI);
 
 /* App object is setup to listen the incoming request that is routed from the site from Node */
 // app here is a defintion which represnts a running express app
 const app = express();
+
+//MW parses the body and assigns to property of incoming req object
+app.use(bodyParser.json());
 
 app.use(
 	cookieSession({
@@ -27,6 +31,18 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
+
+if (process.env.NODE_ENV === 'production') {
+	//Express will serve up production assets like main.js or main.css file
+	app.use(express.static('client/build'));
+
+	// Express will serve up index.html file if it doesn't recognize the route
+	const path = require('path');
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 // instructs express to tell Node that it wants to listen the upcoming traffic on this port
 
