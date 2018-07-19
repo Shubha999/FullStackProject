@@ -7,6 +7,10 @@ import App from './components/App';
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
 
+//Development only axios helpers for testing sendgrid email template
+import axios from 'axios';
+window.axios = axios;
+
 //index.js is the root file for react app always
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
