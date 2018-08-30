@@ -9,6 +9,7 @@ const Landing = () => {
 				it out to your end users for getting feedback for your services.
 			</p>
 			<p> Please login with your Google account for conducting surveys</p>
+			<span>Click on the add button to start creating a new survey</span>
 		</div>
 	);
 };
